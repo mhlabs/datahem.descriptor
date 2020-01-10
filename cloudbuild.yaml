@@ -1,0 +1,8 @@
+# gcloud builds submit --config=cloudbuild.yaml . --substitutions=TAG_NAME=3.9.1
+steps:
+- name: gcr.io/cloud-builders/docker
+  args: ['build', '--build-arg','VERSION=$TAG_NAME', '-t', 'gcr.io/$PROJECT_ID/descriptor:$TAG_NAME', '.']
+- name: gcr.io/cloud-builders/docker
+  args: ['build', '--build-arg','VERSION=$TAG_NAME', '-t', 'gcr.io/$PROJECT_ID/descriptor:latest', '.']
+images:
+- 'gcr.io/$PROJECT_ID/descriptor:$TAG_NAME'
